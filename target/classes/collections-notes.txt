@@ -1,0 +1,1933 @@
+//	https://www.javatpoint.com/working-of-hashmap-in-java
+Need of Collections:
+*********************
+- Variables: It can store only one value.
+	Ex: int a = 10;
+- Arrays:
+	- It can store only homogeneous Data Elements 
+	- Fixed in Size
+	- Ready made API support is not available
+>> To overcome the above problems we prefer collections.
+
+Collections:
+````````````
+	- Can store Homogeneous and Heterogeous Data Elements
+	- Growable in size [Size is not Fixed ]
+	- Ready made API support is available in the Collections.	
+
+
+======================================================================
+
+Collection: [1.2v]
+******************
+- To represent group of individual objects as a single entity / unit.
+
+Example-1: [Need of Collections]
+----------
+package com.swamy.collections;
+
+public class NeedOfCollections {
+
+	public static void main(String[] args) {
+		int a = 10;
+		int b = 20;
+		int c = 30;
+		int d = 40;
+		// If we want represent 10,000 variables then this is the Bad Programing Practice.
+		//To overcome this problem we prefer An Arrays
+		
+		int[] intArray = new int[10000];	
+		intArray[1] = 10;
+		intArray[9999] = 20;
+		System.out.println(intArray[1]); //10
+		
+		//Limitations of an Array
+		//1. Arrays are Fixed in Size
+		//2. Arrays can store Homogeneous Elements only.
+		
+		Student[] stdArray = new Student[10];
+		stdArray[1] = new Student();
+		stdArray[2] = new Student();
+		// stdArray[3] = new Book(); //Type mismatch
+		
+		//To overcome this Problem we have Object class is present in the Java
+		Object[] objArray = new Object[10];
+		objArray[1] = new Student();
+		objArray[2] = new Student();
+		objArray[3] = new Book(); 
+		
+		//3. Readymade API support is not available in an Arrays.
+		
+		//Collections: 
+		// 1. Can hold both Homogeneous and Heterogeneous Elements
+		// 2. Collections are implemented based on Standard Data Structures and Algorithms
+		// 3. Ready made support is available in the Collections.
+	}
+	
+}
+
+class Book{
+	
+}
+class Student{
+	
+}
+
+======================================================================
+
+Java Collections Hierarchy:
+***************************
+- Collections represents group of individual Objects as a single entity / Unit.
+
+Example-2:
+```````````
+package com.swamy.collections;
+
+import java.util.*;
+
+public class CollectionInterface {
+
+	public static void main(String[] args) {
+		
+		Collection<String>collection = new ArrayList<String>();
+		collection.add("Banana");
+		collection.add("Apple");
+		collection.add("Pineapple");
+		collection.add("Grapes");
+		System.out.println(collection); //[Banana, Apple, Pineapple, Grapes]
+		
+		System.out.println(collection.contains("Apple")); //True
+		System.out.println(collection.contains("Mango")); //False
+
+		collection.forEach((data)->{
+			System.out.println(data);
+		});
+
+		// collection.forEach(System.out::println);
+		
+		System.out.println(collection.isEmpty()); //false
+		System.out.println(!collection.isEmpty()); //true
+
+		System.out.println(collection); //[Banana, Apple, Pineapple, Grapes]
+		collection.remove("Apple");
+		System.out.println(collection); //[Banana, Pineapple, Grapes]
+		
+		collection.clear();
+		System.out.println(collection); // []
+	}
+}
+
+======================================================================
+
+List Interface [1.2v]:
+----------------------
+- List is the Child Interface of Collection.
+- If we want to represent a group of individual objects as a single entity where   duplicates are allowed and Insertion order must be preserved.
+- We can differentiate dupicates by using indexes.
+- List indexes starts from Zero, Just like Arrays.
+- We can preserve the insertion order by using index, 
+  hence index play very imp role in list.
+- Some of the List Implemented Classes are ArrayList, LinkedList, Vector, Stack,..etc
+
+The implementation classes of List interface:
+`````````````````````````````````````````````
+ArrayList [1.2v]
+LinkedList [1.2v]
+Vector [1.0v]
+Stack [1.0v]
+
+Example-3:
+``````````
+package com.swamy.collections;
+
+import java.util.*;
+
+public class ListInterface {
+
+	public static void main(String[] args) {
+		
+		List<String>list = new ArrayList<>();
+		
+		//List allows Duplicate Elements
+		list.add("element1");
+		list.add("element1");
+		list.add("element5");
+		list.add("element5");
+		System.out.println(list); //[element1, element1, element5, element5]
+		
+		//List allows NULL values also
+		list.add(null);
+		list.add(null);
+		list.add(null);
+		System.out.println(list);
+		// [element1, element1, element5, element5, null, null, null]
+		
+		list.clear();	
+		System.out.println(list); //[]
+		
+		//List Must be follows Insertion Order
+		list.add("Data1");
+		list.add("Data3");
+		list.add("Data4");
+		list.add("Data2");
+		System.out.println(list); // [Data1, Data3, Data4, Data2]
+		
+	}
+}
+
+==========================================================================
+
+ArrayList [1.2v]:
+******************
+- Underlying Datastructure for ArrayList is Resizable array or growable array/Growable Array.
+- An ArrayList is Re-Sizable Array and also called as 'Dynamic Array'
+- It grows its size if new elements are added and Shrinks the Size when the elements are removed.
+- ArrayList internally uses an Array to store the Elements.
+- Duplicates are allowed.
+- Null insertion is Possible.
+- Default capacity of ArrayList is 10.
+- It maintains Insertion Order.
+- ArrayList is not synchronized., If multiple threads trying to modify ArrayList at the same time then output will be Non-Deterministic.
+
+**ArrayList Advantage:
+**********************
+- ArrayList is the Best Choice., If our frequent operation is retrieval operation [Because it implements RandomAccess Interface]
+
+**ArrayList Disadvantage:
+*************************
+- ArrayList is the Worst choice if our frequent operation is Insertion or deletion in the middle
+[Because several shift operations are required]
+
+Example-4: (Basic ArrayList Operations)
+``````````
+package com.swamy.arraylist.demo;
+
+import java.util.*;
+
+public class ArrayListEx {
+
+	public static void main(String[] args) {
+		
+		// we can add duplicate elements
+		List<String>list = new ArrayList<>();
+		list.add("Element1");
+		list.add("Element1");
+		System.out.println("\n List Data : " + list);
+		
+		// we can add Null values also
+		list.add(null);
+		list.add(null);
+		System.out.println("\n List Data : " + list);
+		
+		// ArrayList maintains Insertion Order
+		List<Integer>numbers = new ArrayList<>();
+		numbers.add(1);  
+		numbers.add(3);  
+		numbers.add(2);  
+		System.out.println("\n Numbers : " + numbers);
+		
+		//Remove Operations
+		System.out.println("******Remove Operations******");
+		List<String>subs = new ArrayList<>();
+		subs.add("Java");	//index: 0
+		subs.add("SpringBoot");	//index: 1
+		subs.add("Microservices");	//index: 2
+		subs.add("Oracle");	//index: 3
+		subs.add("ReactJS");	//index: 4
+
+		System.out.println(" Subjects are: "+ subs);
+		
+		subs.remove(2);
+		System.out.println(" Subjects After Remove Operation : "+ subs);
+		
+		subs.remove("SpringBoot");
+		System.out.println(" Subjects After Removed SpringBoot : "+ subs);
+		
+		subs.removeAll(subs);
+		System.out.println(" Subjects After removeAll() : "+ subs);
+		
+		subs.add("Hibernate");
+		subs.add("RestfulServices");
+		subs.add("Aws");
+		System.out.println("Again Added Subs" + subs);
+		
+		subs.clear();
+		System.out.println("Subs after clear() : " + subs);
+		
+		// Access the Elements from an ArrayList
+		List<String>fruits = new ArrayList<>();
+		fruits.add("banana");  //index: 0
+		fruits.add("grapes");  //index: 1
+		fruits.add("pineapple");  //index: 2
+		System.out.println("\n Fruits Data : " + fruits);
+		
+		System.out.println(fruits.get(1)); //grapes
+		
+		//Adding the Elements using Index
+		fruits.add(0, "APPLE");
+		System.out.println(fruits);
+		
+		Collections.sort(fruits);
+		System.out.println("ASC : " + fruits);
+		
+		Collections.reverse(fruits);
+		System.out.println("DSC : " + fruits);
+
+		List<Integer>first3EvenNumbers = new ArrayList<>();
+		first3EvenNumbers.add(2);
+		first3EvenNumbers.add(4);
+		first3EvenNumbers.add(6);
+		System.out.println(first3EvenNumbers);
+		
+		List<Integer>Next3EvenNumbers = new ArrayList<>(first3EvenNumbers);
+
+		List<Integer>allEvenNumbers = new ArrayList<>();
+		allEvenNumbers.add(8);
+		allEvenNumbers.add(10);
+		allEvenNumbers.add(12);
+		allEvenNumbers.addAll(Next3EvenNumbers);
+		System.out.println(allEvenNumbers);
+
+		
+	}
+}
+----------------------------------------------------------------------------
+Example-5: (Basic ArrayList Iterations)
+``````````
+package com.swamy.arraylist.demo;
+
+import java.util.*;
+
+public class BasicArrayListIterationDemo {
+
+	public static void main(String[] args) {
+		
+		List<String>list = new ArrayList<>();
+		list.add("Apple");
+		list.add("Banana");
+		list.add("Orange");
+		System.out.println(list);
+		
+		//basic for loop
+		System.out.println("\n****basic for loop****");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+		
+		//Enhanced for-each loop
+		System.out.println("\n****Enhanced for-each loop****");
+		for (String data : list) {
+			System.out.println(data);
+		}
+		
+		//Using Traditional Iterator
+		System.out.println("\n****Using Traditional Iterator****");
+		for(Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
+			String data = iterator.next();
+			System.out.println(data);
+		}
+		
+		//Iterator with while loop
+		System.out.println("\n****Iterator with while loop****");
+		Iterator<String> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			String result = (String) iterator.next();
+			System.out.println(result);
+		}
+		
+		//java8 for-each loop
+		System.out.println("\n****java8 for-each loop****");
+		list.forEach(emps -> System.out.println(emps));
+		
+		//Java8 for-each + streams
+		System.out.println("\n****Java8 for-each + streams****");
+		list.stream().forEach(emps -> System.out.println(emps));
+		
+		//Java8 for-each + streams + method reference
+		System.out.println("\n****Java8 for-each + streams + method reference****");
+		list.stream().forEach(System.out::println);
+	}
+}
+--------------------------------------------------------------------------------
+Example-6: (Iterating Employee Objects Data)
+```````````
+//Employee.java:
+----------------
+package com.swamy.arraylist.demo;
+
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	//Def + Allargs Const + Setters + Getters + toString()
+}
+
+
+//IteratingEmpsDataUsingArrayList.java:
+---------------------------------------
+package com.swamy.arraylist.demo;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class IteratingEmpsDataUsingArrayList {
+
+	public static void main(String[] args) {
+
+		// ArrayList Using Employee class
+		List<Employee> employees = new ArrayList<>();
+		employees.add(new Employee(100, "swamy", 200000.00));
+		employees.add(new Employee(200, "ntr", 300000.00));
+		employees.add(new Employee(300, "venkatesh", 400000.00));
+		employees.add(new Employee(400, "vijay", 500000.00));
+		System.out.println("\n Emps Data : " + employees);
+
+		// for loop //Traditional way
+		System.out.println("\n*********for loop-Traditional way*********");
+		for (int i = 0; i < employees.size(); i++) {
+			System.out.println(employees.get(i));
+		}
+
+		// enhanced for-each loop
+		System.out.println("\n*********enhanced for-each loop*********");
+		for (Employee emp : employees) {
+			System.out.println(emp);
+		}
+
+		// Using Java8 for each loop
+		System.out.println("\n*********Using Java8 for each loop*********");
+		employees.forEach(emp -> System.out.println(emp));
+
+		// Using Java8 for each with Streams
+		System.out.println("\n*********Using Java8 for each with Streams*********");
+		employees.stream().forEach(emp -> System.out.println(emp));
+
+		// Using Java8 for each + streams + method reference
+		System.out.println("\n*********Using Java8 for each + streams + method reference*********");
+		employees.stream().forEach(System.out::println);
+	}
+}
+
+--------------------------------------------------------------------------
+Example-7: (Sorting Operations)
+-----------
+package com.swamy.arraylist.demo;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class SortingEmpInArrayList {
+
+	public static void main(String[] args) {
+
+		// ArrayList Using Employee class
+		List<Employee> employees = new ArrayList<>();
+		employees.add(new Employee(100, "swamy", 200000.00));
+		employees.add(new Employee(200, "ntr", 300000.00));
+		employees.add(new Employee(300, "venkatesh", 400000.00));
+		employees.add(new Employee(400, "vijay", 500000.00));
+		System.out.println("\n Emps Data : " + employees);
+
+		// Sorting Operation - Traditional Way
+		Collections.sort(employees, new Comparator<Employee>() {
+
+			@Override
+			public int compare(Employee o1, Employee o2) {
+				return o1.getEmpId() - o2.getEmpId();
+			}
+		});
+		System.out.println("\nTraditional Way : " + employees);
+
+		// Performing Sorting Operation using Java8 Lambda Expressions
+		Collections.sort(employees, (o1, o2) -> o1.getEmpId() - o2.getEmpId());
+		System.out.println("\nUsing Lambda Expressions ASC: " + employees); // Ascending Order
+
+		// Performing Sorting Operation using Java8 Lambda Expressions
+		Collections.sort(employees, (o1, o2) -> o2.getEmpId() - o1.getEmpId());
+		System.out.println("\nUsing Lambda Expressions DSC: " + employees); // Descending Order
+
+	}
+}
+
+
+============================================================================	
+LinkedList [1.2v]:
+*******************
+- The underlying datastructure is doubly linked list.
+- LinkedList class Implements Queue and Deque interfaces. therefore, it can also used as a Queue,Deque and Stack.
+- Java LinkedList is Not-Thread Safe. 
+- It can allows Duplicate Elements.
+- It can maintains Insertion Order.
+- LinkedList is the best choice if our frequent operation is Insertion or Deletion in the middle.
+- LinkedList is the worst choice if our frequent operation is retrieval operation.
+
+-----------------------------------------------------------------------------------
+
+Example-8: (LinkedList Basic Operations)
+```````````
+package com.swamy.linkedlist;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class LinkedListEx {
+
+	public static void main(String[] args) {
+		
+		//It allows Duplicates + nulls + Insertion Order
+		List<String>fruits = new LinkedList<>();
+		fruits.add("banana"); //0
+		fruits.add("apple"); //1
+		fruits.add("mango"); //2
+		fruits.add("mango"); //3
+		fruits.add(null);
+		System.out.println("Fruits: " + fruits);
+		
+		fruits.add(4, "pineapple");
+		System.out.println("Added Pineapple : " + fruits);
+		
+		boolean flag = fruits.contains("apple");
+		System.out.println("Is Contains: " + flag);
+		
+		String fruit = fruits.get(3);
+		System.out.println(fruit);
+
+		int lastIndexOf = fruits.lastIndexOf("mango");
+		System.out.println("lastIndex val : " + lastIndexOf);
+
+		String remove = fruits.remove(0);
+		System.out.println("removed 1st index val : " + remove);
+		
+		boolean remove2 = fruits.remove("apple");
+		System.out.println("removed apple fruit : " + remove2);
+		
+		fruits.clear();
+		System.out.println("clear() : " + fruits);
+
+		
+		List<String>first3days = new LinkedList<>();
+		first3days.add("sunday");
+		first3days.add("monday");
+		first3days.add("tuesday");
+		System.out.println(first3days);
+		
+		List<String>last4days = new LinkedList<>(first3days);
+		List<String>weekDays = new LinkedList<>();
+		weekDays.add("wednessday");
+		weekDays.add("thurseday");
+		weekDays.add("friday");
+		weekDays.add("saturday");
+		weekDays.addAll(last4days);
+		System.out.println(weekDays);
+	}
+}
+
+----------------------------------------------------------------------------
+Example-9: (Sorting )
+``````````````````````
+//Employee.java:
+``````````````````
+package com.swamy.linkedlist;
+
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	//def + params const + setters + getters + toString()
+}
+
+//SortingInLinkedList.java:
+----------------------------
+package com.swamy.linkedlist;
+
+import java.util.*;
+
+public class SortingInLinkedList {
+
+	public static void main(String[] args) {
+
+		List<Employee> employees = new LinkedList<>();
+		employees.add(new Employee(100, "swamy", 56000.00));
+		employees.add(new Employee(101, "kiran", 92000.00));
+		employees.add(new Employee(102, "tarak", 57000.00));
+		System.out.println(employees);
+
+//		Collections.sort(employees, new Comparator<Employee>() {
+//
+//			@Override
+//			public int compare(Employee o1, Employee o2) {
+//				return o2.getEmpId() - o1.getEmpId();
+//			}
+//		});
+
+		Collections.sort(employees, (o1,o2)->o2.getEmpId() - o1.getEmpId());
+		
+		System.out.println(employees);
+	}
+}
+
+----------------------------------------------------------------------------
+
+Example-10:
+```````````
+package com.swamy.linkedlist;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class IterationInLinkedList {
+
+	public static void main(String[] args) {
+
+		List<String> list = new LinkedList<>();
+		list.add("num1");
+		list.add("num2");
+		list.add("num3");
+		list.add("num4");
+
+		// for loop
+		System.out.println("\n******for loop******");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+
+		// enhanced for loop
+		System.out.println("\n******enhanced for loop******");
+		for (String data : list) {
+			System.out.println(data);
+		}
+
+		// using iterator with while loop
+		System.out.println("\n******using iterator with while loop******");
+		Iterator<String> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			String data = (String) iterator.next();
+			System.out.println(data);
+		}
+
+		// using Java8 foreach loop
+		System.out.println("\n******using Java8 foreach loop******");
+		list.forEach(data -> System.out.println(data));
+
+		// using Java8 foreach loop + streams
+		System.out.println("\n******using Java8 foreach loop + streams******");
+		list.stream().forEach(data -> System.out.println(data));
+
+		// using Java8 foreach loop + streams + method ref
+		System.out.println("\n******using Java8 foreach loop + streams + method ref******");
+		list.stream().forEach(System.out::println);
+	}
+}
+
+----------------------------------------------------------------------------
+
+Differnces between ArrayList and LinkedList:
+********************************************
+
+ArrayList [1.2v]:
+=================
+- Underlying DataStructure is Growable / Dynamic Array.
+- Manipulation with ArrayList is Slow. because it uses an array, if any element is removed in the middle then lot of shift operations required.
+- ArrayList consumes less memory than LinkedList.
+- ArrayList is best for Storing and Accessing/Retrieving the Data.
+- An ArrayList class acts as List only because it implemented from List only.
+
+LinkedList [1.2v]:
+==================
+- Underlying DataStructure for LinkedList is 'Doubly LinkedList' to store elements.
+
+*** LinkedList uses Doubly LinkedList. it contains collection of nodes., each node contains 3-parts where 1st part rep ref for previous node, 2nd part rep body and 3rd part rep ref of next node.
+
+Node in Doubly LinkedList:
+```````````````````````````
+________________________________
+|1st part | 2nd part | 3rd part |
+|_________|__________|__________|
+
+Note:
+`````
+=> 1st part represents reference for previous node
+=> 2nd part rep body 
+=> 3rd part rep ref of next node.
+
+- Manipulation with LinkedList bit faster when compared to the ArrayList., because LinkedList uses Doubly LinkedList, so no shifting is required in the memory.
+- LinkedList consumes more memory than ArrayList because LinkedList stores previous and next references along with the Data.
+- LinkedList is better for Manipulating Data.
+- LinkedList class will acts as List and Queue. because LinkedList implemented from List and Deque Interfaces.
+==============================================================================
+ 
+Vector[C](1.0V):
+****************
+- The underlying datastructure for vector is ReSizable Array/Growable Array/Dynamic Array.
+- Duplicate Objects are allowed.
+- Insertion order is preserved.
+- null insertion is possible.
+- Heterogeneous objects are allowed.
+- Most of the Methods present in the vector is synchronized.
+	>> >> hence vector object is "thread-safe".
+- Best choice if the frequent operation is retrieval/fetch.
+
+Methods in Vector:
+``````````````````
+add(Object o)   -->>[From Collection - List(I)]
+add(int index,Object o)  -->>[From List]
+addElement(Object o) -->> [From Vector]
+
+Remove(Object o) --->>[From Collection]
+removeElement(Object o)-->>[From Vector]
+remove(int index)-->> [From List]
+RemoveElementAt(int index) -->>[From Vector]
+clear() -->>[From Collection]
+removeAllElements() -->>[From Vector]
+
+Constructors in Vector:
+***********************
+1. Vector v = new Vector();
+- creates an empty vector object with default capacity 10,
+once vector reaches its max capacity a new vector object will be
+created with newCapacity = 2 * current capacity.
+
+2.Vector v = new Vector(int initialCapacity);
+- creates an empty vector object with specified capacity.
+
+3.Vector v = new Vector(int initialCapacity,int incrementalCapacity);
+
+4.Vector v = new Vector(Collection c);
+
+Example-11
+``````````
+package com.swamy.vector;
+
+import java.util.Iterator;
+import java.util.Vector;
+
+public class VectorEx {
+
+	public static void main(String[] args) {
+		
+		// Allows Duplicate Elements 
+		// Maintaining Insertion Order
+		// Allows null values also
+		Vector<String> vector = new Vector<>();
+		vector.add("Apple"); //0
+		vector.add("Banana"); //1
+		vector.add("Mango"); //2
+		vector.add("Mango"); //3
+		vector.add(null); //4
+		System.out.println(vector);
+		
+		vector.add(3, "Pineapple");
+		System.out.println("Added Pineapple : " + vector);
+		
+		boolean flag = vector.contains("Apple");
+		System.out.println("Is Vector Contains an Apple : " + flag);
+		
+		String firstElement = vector.firstElement();
+		System.out.println(firstElement);
+		
+		String val = vector.get(2);
+		System.out.println(val);
+		
+		String elementAt = vector.elementAt(1);
+		System.out.println(elementAt);
+
+		Vector<String> v = new Vector<>();
+		v.add("R_Fruit");
+		boolean retainAll = vector.retainAll(v);
+		System.out.println(retainAll);
+		
+		//Adding data to Vector.
+		vector.add("Element1");
+		vector.add("Element2");
+		vector.add("Element3");
+		System.out.println(vector);
+		
+		System.out.println("\n***using iterator***");
+		Iterator<String> iterator = vector.iterator();
+		while (iterator.hasNext()) {
+			String data = (String) iterator.next();
+			System.out.println(data);
+		}
+		
+		System.out.println("\n*****Using Java8 Lambda Exp *****");
+		vector.forEach(data -> System.out.println(data));
+		
+		System.out.println("\n*****Using Java8 Lambda Exp + streams*****");
+		vector.stream().forEach(data -> System.out.println(data));
+
+		System.out.println("\n*****Using Java8 Lambda Exp + streams + method ref *****");
+		vector.stream().forEach(System.out::println);
+		
+		Vector<Integer>first2BaseNums = new Vector<>();
+		first2BaseNums.add(1);
+		first2BaseNums.add(3);
+		System.out.println(first2BaseNums);
+		
+		Vector<Integer>next3BaseNums = new Vector<>(first2BaseNums);
+		Vector<Integer>baseNums = new Vector<>();
+		baseNums.add(5);
+		baseNums.add(7);
+		baseNums.add(9);
+		baseNums.addAll(next3BaseNums);
+		System.out.println(baseNums);
+		
+	}
+}
+
+
+================================================================================
+
+Stack [1.0v]:
+*************
+- It is the child class of Vector.
+- It specially designed class for LastInFirstOut[LIFO]
+
+Stack s = new Stack();
+
+Methods in Stack:
+*****************
+Object push(Object obj);
+ - for inserting an object to the stack.
+Object pop();
+ - to removes and returns top of the stack.
+Object peek();
+ - To returns the top of the stack without removal of object.
+int search(Object obj);
+
+Ex- code:
+`````````
+class StackDemo{
+  main(){
+    Stack s = new Stack();
+    s.push("A");
+    s.push("B");
+    sysout(s);	
+    sysout(s.search("A"));	
+    sysout(s.search("Z"));	
+
+  }
+}
+
+---------------------------------------------------------------------------------
+Example-12:
+```````````
+package com.swamy.stack;
+
+import java.util.Stack;
+
+public class StackEx {
+
+	public static void main(String[] args) {
+
+		// Duplicates are allowed
+		// null insertion possible
+		// Maintaining Insertion Order
+		Stack<String> stack = new Stack<>();
+		stack.add("Num1");
+		stack.add("Num2");
+		stack.add("Num3");
+		stack.add("Banana");
+		System.out.println(stack);
+		
+		String fruit = stack.push("Apple");  //Pushes an element onto the top of stack
+		System.out.println("Fruits: "+ fruit);
+		System.out.println("Stack: "+stack);
+		
+		String popData = stack.pop(); //removed an item from the Stack
+		System.out.println("popData: " + popData);
+		System.out.println("stackData: " + stack);
+		
+		String peekData = stack.peek();
+		System.out.println("peekData: " + peekData);
+		System.out.println("stackData: " + stack);
+		
+		int search = stack.search("Banana");
+		System.out.println(search);
+
+		
+		Stack<String>fruits = new Stack<>();
+		
+		fruits.add("Banana");
+		fruits.add("Apple");
+		fruits.add("Pineapple");
+		System.out.println(stack);
+		stack.addAll(fruits);
+		System.out.println(stack);
+	}
+}
+=================================================================================
+
+Set [1.2v]:
+***********
+- Set is the Child Interface of Collection.
+- To Represent group of Individual objects as a single entity where duplicates are not allowed and Insertion order not preserved.
+
+Implemented classes of Set:
+```````````````````````````
+> HashSet [1.2v]
+> LinkedHashSet [1.4v]
+
+HashSet:
+********
+- Underlying DataStructure for HashSet is 'HashTable'.
+- HashSet internally uses 'HashTable' to store the Elements.
+- It doesn't allows Duplicates
+- It allows NULL values.
+- It doesn't maintains Insertion Order. (UnOrdered Collection)
+- HashSet is not Thread-Safe., if we want to use HashSet in Multi-Threaded environment then we can synchronize explicitly.
+
+Example-13: (HashSet Operations)
+```````````
+package com.swamy.hashset;
+
+import java.util.*;
+
+public class HashSetEx {
+
+	public static void main(String[] args) {
+		// Duplicates are not allowed
+		// Not maintaining Insertion order
+		// Allows NULL values
+		Set<String> fruits = new HashSet<>();
+		fruits.add("Apple");
+		fruits.add("Banana");
+		fruits.add("Apple");
+		fruits.add(null);
+		System.out.println(fruits);
+
+		Set<String> flowers = new HashSet<>(fruits);
+		Set<String> setElements = new HashSet<>();
+		setElements.add("Rose");
+		setElements.add("Jasmine");
+		setElements.addAll(flowers);
+		System.out.println(setElements);
+
+		// **Iterations**
+
+		Set<String> set = new HashSet<>();
+		set.add("January");
+		set.add("February");
+		set.add("March");
+		System.out.println(set);
+
+		// enhanced for-each loop
+		System.out.println("\n*******enhanced for-each loop*******");
+		for (String data : set) {
+			System.out.println(data);
+		}
+
+		// using iterator
+		System.out.println("\n*******using iterator*******");
+		for (Iterator<String> iterator = set.iterator(); iterator.hasNext();) {
+			String data = iterator.next();
+			System.out.println(data);
+		}
+
+		// using iterator with while loop
+		System.out.println("\n*******using iterator with while loop*******");
+		Iterator<String> iterator = set.iterator();
+		while (iterator.hasNext()) {
+			String data = (String) iterator.next();
+			System.out.println(data);
+		}
+
+		// java8 forEach + Lambda Exp
+		System.out.println("\n*******java8 forEach + Lambda Exp*******");
+		set.forEach(data -> System.out.println(data));
+
+		// java8 forEach + Lambda Exp + Streams
+		System.out.println("\n*******java8 forEach + Lambda Exp + Streams *******");
+		set.stream().forEach(data -> System.out.println(data));
+
+		// java8 forEach + Lambda Exp + Streams + Method Ref
+		System.out.println("\n*******java8 forEach + Lambda Exp + Method Ref *******");
+		set.forEach(System.out::println);
+		
+		set.clear();
+		System.out.println(set);
+	}
+}
+
+===============================================================================
+LinkedHashSet:
+**************
+- Underlying DataStructure Hashtable & a doubly-linked list uses to store & maintain the elements.
+- It doesn't allows Duplicate Elements.
+- It maintains Insertion Order.
+- LinkedHashSet is not Thread-Safe.
+
+
+Differences between HashSet and LinkedHashSet:
+**********************************************
+-> HashSet doesn't maintains insertion order where LinkedHashMap maintains insertion order.
+-> HashSet uses Hashtable., where LinkedHashSet uses Hashtable & Doubly LinkedList to store and maintain the Elements.
+
+
+SortedSet[I][1.2V]:
+*******************
+- SortedSet is the Child Interface of Set.
+- If we want to represent a group of individual objects as a single entity where duplicates are not allowed but all objects should inserted according to some sorting order then we can go for SortedSet.
+
+Example-14:
+-----------
+package com.swamy.linkedhashset;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+public class LinkedHashSetEx {
+
+	public static void main(String[] args) {
+
+		// allows NULL values
+		// duplicates not allowed
+		Set<String>set = new LinkedHashSet<>();
+		set.add("Apple");
+		set.add(null);
+		set.add("Apple");
+		set.add("Banana");
+		System.out.println(set);
+		
+		set.forEach(System.out::println);
+
+		Set<String>setData = new LinkedHashSet<>(set);
+		
+		Set<String>setElements = new LinkedHashSet<>();
+		setElements.add("Rose");
+		setElements.add("Lilly");
+		setElements.addAll(setData);
+		System.out.println(setElements);
+	}
+}
+===============================================================================
+
+NavigableSet:[I][1.6V]
+**********************
+- It is the child interface of SortedSet.
+- It defines several methods for Nagivation purpose .
+
+===============================================================================
+
+TreeSet [1.2v]:
+***************
+- TreeSet internally using DataStructure 'Tree' to Store the elements.
+- Java TreeSet class maintains ascending order.
+- Java TreeSet class is non synchronized.
+- It is fast in Retrieval Operations.
+
+	SortedSet<String> set = new TreeSet<>();
+
+Example-15:
+```````````
+package com.swamy.treeset;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+public class TreeSetEx {
+
+	public static void main(String[] args) {
+		
+		SortedSet<String>set = new TreeSet<>();
+		set.add("Apple");
+		set.add("Banana");
+		set.add("Grapes");
+		System.out.println(set);
+		
+		String first = set.first();
+		System.out.println("First Element : " + first);
+		
+		String last = set.last();
+		System.out.println("Last Element : " + last);
+		
+		System.out.println("\n******Java8 Lambda Exp******");
+		set.forEach(data -> System.out.println(data));
+		
+		System.out.println("\n******Java8 Lambda Exp + Streams******");
+		set.stream().forEach(data -> System.out.println(data));
+		
+		System.out.println("\n******Java8 Lambda Exp + Streams + Method ref******");
+		set.stream().forEach(System.out::println);
+	}
+}
+
+===============================================================================
+
+Map [1.2v]:
+***********
+- It is not child interface of Collection[I]
+- If we want to represent group of individual elements as a key-value pairs then we should go for Map.
+- Both the key and Values are the Objects 
+- Duplicate keys are not allowed but values can be duplicated.
+
+HashMap [1.2v]:
+***************
+- HashMap uses an array and LinkedList data structure internally for storing Key and Value. There are four fields in HashMap.
+- HashMap is a Hashtable based Implementation in Java.
+- HashMap is the part of Java Collection Framework.
+- It uses a Tecnique called 'Hashing'.
+- Hashing is the process of Converting an Object into an Integer value. The Integer value helps in Indexing and faster searches.
+- It implements the Map interface.
+- It stores the data in the form of Key-Value pairs.
+- HashMap cannot contains Duplicate keys.
+- HashMap is UnOrdered Collection.
+- HashMap is Not Thread-Safe.
+- HashMap contains array of Nodes. and the Node is represented as a class.
+
+
+
+===============================================================================
+Example-16: (HashMap Operations)
+```````````
+package com.swamy.hashmap;
+
+import java.util.*;
+
+public class HashMapEx {
+
+	public static void main(String[] args) {
+		
+		//Duplicate Keys are Not Allowed
+		// Not Maintaining Insertion Order
+		// Allows Nulls also.
+		Map<Integer, String>map = new HashMap<>();
+		map.put(1, "Val-1");
+		map.put(2, "Val-2");
+		map.put(3, "Val-3");
+		map.put(4, null);
+		map.put(null, null);
+		System.out.println(map);
+		
+		String val1 = map.get(1);
+		System.out.println(val1);
+		
+		boolean result = map.isEmpty();
+		System.out.println("Is Map Empty : " + result);
+		
+		Set<Integer> keySet = map.keySet();
+		System.out.println("Keys are: " + keySet);
+		
+
+		//Merging
+		Map<Integer, Integer>mapNums = new HashMap<>();
+		
+//		mapNums.merge(1, 20, new BiFunction<Integer,Integer,Integer>() {
+//
+//			@Override
+//			public Integer apply(Integer t, Integer u) {
+//				return t+u;
+//			}
+//		});
+//		System.out.println(mapNums);
+		
+		//Using Java8 Lambda Expressions
+		mapNums.merge(1, 15, (t, u) ->(t+u));
+		
+		System.out.println(mapNums);
+		
+		//-------------------------------------------//
+		mapNums.compute(1, new BiFunction<Integer, Integer, Integer>() {
+
+			@Override
+			public Integer apply(Integer t, Integer u) {
+				return t*u;
+			}
+		});
+		System.out.println("H"+mapNums);
+
+		//-------------------------------------------//
+		Map<Integer, String>mapFruits = new HashMap<>();
+		mapFruits.put(1, "Mango");
+		mapFruits.put(2, "Banana");
+		mapFruits.put(3, "Grapes");
+		System.out.println(mapFruits);
+		
+		mapFruits.replace(1, "Pineapple");
+		System.out.println(mapFruits);
+		
+		mapFruits.replace(2, "Banana", "Watermelon");
+		System.out.println(mapFruits);
+		
+		Collection<String> values = mapFruits.values();
+		System.out.println(values);
+
+		int size = mapFruits.size();
+		System.out.println(size);
+
+		boolean containsKey = mapFruits.containsKey(1);
+		System.out.println(containsKey);
+		
+		boolean containsValue = mapFruits.containsValue("Grapes");
+		System.out.println(containsValue);
+		
+		//------Using Java8 Lambda Expressions-----------------//
+		mapFruits.forEach((k,v) -> System.out.println(k + " - "+ v));
+
+	}
+}
+==============================================================================
+
+LinkedHashMap:
+**************
+- It maintains Insertion Order.
+- It allows one null key and Multiple null values.
+- The underlying data structure of LinkedHashMap is HashTable and LinkedList
+- It is non-Synchronized.
+- The Implementation of LinkedHashMap is very similar to Doubly LinkedList.
+		 _______________________________________
+		| Before   |  Key   |   Value   | After |
+		 _______________________________________
+
+Example-17: (LinkedHashMap Operations)
+```````````
+package com.swamy.linkedhashmap;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class LinkedHashMapEx {
+
+	public static void main(String[] args) {
+
+		//Duplicate Keys are not allowed
+		// allowed one null key and multiple null values
+		// Maintaining Insertion Order
+		Map<Integer,String>map = new LinkedHashMap<>();
+		map.put(1, "A");
+		map.put(1, "B");
+		map.put(2, null);
+		map.put(2, null);
+		map.put(3, null);
+		map.put(null, null);
+		System.out.println(map);
+		
+		map.forEach((k, v)->System.out.println(k +" - "+ v));
+	}
+}
+
+====================================================================================
+
+TreeMap:
+********
+- The underlying data structure of TreeMap is "Red-Black binary search tree". 
+- TreeMap contains only unique elements.
+- TreeMap cannot have null keys but can have null values
+- TreeMap is non-synchronized.
+- TreeMap maintains 'Ascending Order'
+- It stores Key-Value Pairs in Sorted Order.
+
+Example-18:
+```````````
+package com.swamy.treemap;
+
+import java.util.*;
+
+public class TreeMapEx {
+
+	public static void main(String[] args) {
+		
+		// Keys should be Unique
+		// Allowed Multiple null values
+		NavigableMap<Integer, String>map = new TreeMap<>();
+		map.put(1, "A");
+		map.put(2, "B");
+		map.put(3, "C");
+		map.put(4, null);
+		map.put(5, null);
+		System.out.println(map);
+		
+		map.forEach((k, v) -> System.out.println(k +" - "+ v));
+
+		//----------------------------//
+		NavigableSet<Integer> descendingKeySet = map.descendingKeySet();
+		System.out.println(descendingKeySet);
+		
+		//----------------------------//
+		NavigableMap<Integer, String> descendingMap = map.descendingMap();
+		System.out.println(descendingMap);
+		
+		//----------------------------//
+		Entry<Integer, String> firstEntry = map.firstEntry();
+		System.out.println(firstEntry);
+		
+		//----------------------------//
+		Integer firstKey = map.firstKey();
+		System.out.println(firstKey);
+		
+		//----------------------------//
+		SortedMap<Integer, String> headMap = map.headMap(2);
+		System.out.println(headMap);
+		
+		//----------------------------//
+		NavigableSet<Integer> navigableKeySet = map.navigableKeySet();
+		System.out.println(navigableKeySet);
+		
+		//----------------------------//
+		Entry<Integer, String> pollFirstEntry = map.pollFirstEntry();
+		System.out.println(pollFirstEntry);
+		
+		//----------------------------//
+		SortedMap<Integer, String> subMap = map.subMap(1, 3);
+		System.out.println(subMap);
+
+		//----------------------------//
+		SortedMap<Integer, String> tailMap = map.tailMap(3);
+		System.out.println(tailMap);
+	}
+}
+
+=================================================================================
+
+Hashtable [10.v]
+****************
+- The Underlying DataStructure for HashTable is HashTable.
+- Insertion Order is not preserved.
+- Duplicates are not allowed.
+- It is Legacy Collection.
+- Hashtable class is Synchronized.
+
+Example-19:
+````````````
+package com.swamy.hashtable;
+
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.BiConsumer;
+
+public class HashtableEx {
+
+	public static void main(String[] args) {
+
+		// Duplicates are Not Allowed
+		// Key and Values should not be null
+		Hashtable<Integer, String> map = new Hashtable<>();
+		map.put(1, "V-1");
+		map.put(2, "V-2");
+		map.put(5, "V-3");
+		map.put(5, "V-3");
+		System.out.println(map);
+		
+		map.forEach((t, u) -> System.out.println(t +" - "+ u));
+		
+		Set<Entry<Integer, String>> entrySet = map.entrySet();
+		System.out.println(entrySet);
+		
+		Collection<String> values = map.values();
+		System.out.println(values);
+		
+		String val = map.get(2);
+		System.out.println(val);
+		
+		boolean isEmpty = map.isEmpty();
+		System.out.println(isEmpty);
+		
+		map.replace(1, "HELLO");
+		System.out.println(map);
+		
+		map.clear();
+		System.out.println(map);
+		
+	}
+}
+=================================================================================
+	
+For Sorting:
+************
+1.Comparable[I]
+2.Comparator[I]
+
+1.Comparable:
+--------------
+- It is meant for default natural sorting order.
+
+2.Comparator:
+-------------
+- It is meant for customized sorting order.
+
+===========================================================================
+1.Comparable:
+--------------
+- It is meant for Natural sorting order.
+- Comparable Interface comes under java.lang package.
+- Comparable provides compareTo(T o)method.
+- The class which has to be Sorted should implement the Comparable interface.
+- When Comparable is used to sort the list, then we will use Collections.sort(list).
+
+Comparable Example-20:
+*********************
+package com.swamy.comparable;
+
+import java.util.*;
+
+import lombok.*;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Employee implements Comparable<Employee> {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+
+	@Override
+	public int compareTo(Employee employee) {
+		
+		if(empId == employee.getEmpId()) {
+			return 0;
+		}
+		else if(empId > employee.getEmpId()) {
+			return 1;
+		}
+		
+		return -1;
+
+		//return empId.compareTo(employee.empId);
+	}
+}
+
+public class ComparableTest {
+
+	public static void main(String[] args) {
+		
+		List<Employee>list = new ArrayList<>();
+		list.add(new Employee(103, "Swamy", 56000.00));
+		list.add(new Employee(101, "Tarak", 69000.00));
+		list.add(new Employee(102, "Krishna", 74000.00));
+
+		System.out.println("\n********Before Sorting********");
+		list.forEach(System.out::println);
+		
+		System.out.println("\n********After Sorting********");
+		Collections.sort(list);
+		list.forEach(System.out::println);
+	}
+}
+
+Output:
+*******
+
+********Before Sorting********
+Employee(empId=103, empName=Swamy, empSal=56000.0)
+Employee(empId=101, empName=Tarak, empSal=69000.0)
+Employee(empId=102, empName=Krishna, empSal=74000.0)
+
+********After Sorting********
+Employee(empId=101, empName=Tarak, empSal=69000.0)
+Employee(empId=102, empName=Krishna, empSal=74000.0)
+Employee(empId=103, empName=Swamy, empSal=56000.0)
+
+===========================================================================
+
+2.Comparator:
+-------------
+- It is meant for customized sorting order.
+- Comparator Interface comes under java.util package.
+- Comparator provides compare(T o1, T o2)method.
+- The class which has to be Sorted should not implement the Comparator interface.
+- When Comparator is used to sort the list, then Explicitly we will use Comparator as the Param.
+Collections.sort(list, Comparator).
+
+Comparator Example-21:
+**********************
+package com.swamy.comparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Employee {
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+}
+
+public class ComparatorTest {
+
+	public static void main(String[] args) {
+		List<Employee>list = new ArrayList<>();
+		list.add(new Employee(103, "Swamy", 56000.00));
+		list.add(new Employee(100, "Tarak", 69000.00));
+		list.add(new Employee(102, "Krishna", 74000.00));
+
+		System.out.println("\n********Before Sorting********");
+		list.forEach(System.out::println);
+		
+		Comparator<Employee> comparing = Comparator.comparing(Employee::getEmpId);
+		Collections.sort(list, comparing);
+
+		//Collections.sort(list, (o1, o2) -> o1.getEmpId() - o2.getEmpId());
+		
+		
+		System.out.println("\n********After Sorting********");
+		list.forEach(System.out::println);
+	}
+}
+
+Output:
+*******
+
+********Before Sorting********
+Employee(empId=103, empName=Swamy, empSal=56000.0)
+Employee(empId=100, empName=Tarak, empSal=69000.0)
+Employee(empId=102, empName=Krishna, empSal=74000.0)
+
+********After Sorting********
+Employee(empId=100, empName=Tarak, empSal=69000.0)
+Employee(empId=102, empName=Krishna, empSal=74000.0)
+Employee(empId=103, empName=Swamy, empSal=56000.0)
+
+===========================================================================
+
+Cursors:
+********
+- We will use Cursors to get the Objects from collection one by one.
+
+There are 3-cursors:
+`````````````````````
+1.Enumeration[I] [1.0v]
+2.Iterator[I] [1.2v]
+3.ListIterator[I] [1.2v]
+===========================================================================
+1.Enumeration[I]:
+*****************
+- Enumeration is used to get the Objects one by one from Legacy Collection.
+- To Create Enumeration object we have to use 'elements()' method of vector class.
+		
+			Enumeration e = v.elements();
+Enumeration Contains 2-methods:
+```````````````````````````````
+1. boolean hasMoreElements() : Return True if any element is available to process., and return False if there is no element is present.
+
+2. public Object nextElement() : This will return next object.
+
+Limitations:
+************
+- Enumeration introduced in Java 1.0v 
+- It is applicable for Legacy classes.
+- It is not Universal Cursor means it is meant for Vector and Stack., but not for ArrayList and LinkedList.
+- It supports only Forward Direction only.
+- We have only Read access is available in Enumeration but we don't have remove option.
+
+>> To overcome these Limitations we will use Iterator Cursor.
+
+Example-22 (Enumeration)
+------------------------
+package com.swamy.cursor.enumeration;
+
+import java.util.*;
+
+public class EnumerationTest {
+
+	public static void main(String[] args) {
+
+		Vector<String>vector = new Vector<>();
+		vector.add("SUN");
+		vector.add("MON");
+		vector.add("TUE");
+		vector.add("WED");
+		Enumeration<String> enumeration = vector.elements();
+
+		while (enumeration.hasMoreElements()) {
+			String enumVals = (String) enumeration.nextElement();
+			System.out.println(enumVals);
+		}
+	}
+}
+
+===========================================================================
+
+2.Iterator[I]:
+**************
+- Iterator is an Universal Cursor.
+- Iterator is applicable for all Collection Interfaces.
+- In Enumeration., we have only read access over objects, we couldn't remove objects.
+- Incase of Iterator we can do both read and remove objects.
+- It is Introduced in Java 1.2 V.
+- To create the iterator we have iterator() method present in the Collection.
+
+			Iterator itr = c.iterator();
+** Available Methods in the Iterator:
+*************************************
+boolean hasNext() : Return True if any elements are available to process., else false.
+public Object next() : Return next elements
+public void remove() : Remove Object from the Collection.
+
+Example-23: (Iterator)
+**********************
+package com.swamy.cursor.iterator;
+
+import java.util.*;
+
+public class IteratorTest {
+
+	public static void main(String[] args) {
+
+		//Vector<String>monthNames = new Vector<>();
+		List<String>monthNames = new ArrayList<>();
+		monthNames.add("JAN");
+		monthNames.add("FEB");
+		monthNames.add("MAR");
+		monthNames.add("APRL");
+		
+		Iterator<String> iterator = monthNames.iterator();
+		while (iterator.hasNext()) {
+			String data = (String) iterator.next();
+			System.out.println(data);
+		}
+	}
+}
+
+Limitations with Iterator:
+***************************
+- Iterator(even Enumeration) supports only Forward Direction., we can't move Backward Direction.
+- It supports only read and remove operations.
+- It doesn't supports to Add new objects.
+>> >> To overcome these Limitations we can go for ListIterator.
+
+===========================================================================
+
+3.ListIterator[I]
+*****************
+- It is the Child Interface of Iteratior.
+- It is also Introduced in Java1.2V
+- ListIterator supports both Forward and BackWard Directions.
+- ListIterator supports operations like read, remove, adding new objects.
+- To create the ListIterator Object we have a method present in List i.e., listIterator().
+
+		ListIterator listItr = list.listIterator();
+
+Methods available in ListIterator:
+**********************************
+below 3-methods for Forward Direction:
+``````````````````````````````````````
+1. public boolean hasNext() : It true if elements are available else return false
+2. public Object next() : get the next element from the List
+3. public int nextIndex() : get the Index of Next Element.
+
+below 3-methods for Backward Direction:
+``````````````````````````````````````
+1. public boolean hasPrevious() : Return true if elements are available in previous position else return false.
+
+2. public Object previous() : get the previous elements from the list
+3. public int previousIndex() : get the index of previous elements.
+
+below 3-methods are extra Methods:
+``````````````````````````````````
+1. public void remove() : To remove the element from the List
+2. public void add(Object obj) : add new element to the list
+3. public void set(Object obj) : replace the element in the list. 
+
+Example-24 (ListIterator)
+*************************
+package com.swamy.cursor.listiterator;
+
+import java.util.*;
+
+public class ListIteratorTest {
+
+	public static void main(String[] args) {
+		
+		LinkedList<String>list = new LinkedList<>();
+		list.add("SWAMY");
+		list.add("NTR");
+		list.add("VICTORY");
+		list.add("VENKATESH");
+		list.add("SIMHA");
+		System.out.println(list);
+		
+		ListIterator<String> listIterator = list.listIterator();
+		
+		while (listIterator.hasNext()) {
+			String itr = (String) listIterator.next();
+			if(itr.equals("NTR")) {
+				listIterator.set("TIGER");
+			}
+			else if (itr.equals("VICTORY")) {
+				listIterator.remove();
+			}
+		}
+		System.out.println(list);
+	}
+}
+
+output:
+-------
+[SWAMY, NTR, VICTORY, VENKATESH, SIMHA]
+[SWAMY, TIGER, VENKATESH, SIMHA]
+
+===========================================================================
+
+Utility classes:
+*****************
+- which defines several utility methods
+
+1.Collections
+2.Arrays
+
+1.Collections: 
+``````````````
+-It defines several utility methods for collection objects.
+
+2.Arrays:
+`````````
+- It defines several utility methods for Array objects.
+- Arrays class contains methods for sorting, searching and comparing arrays.
+
+===========================================================================
+
+1.Collections: 
+``````````````
+-It defines several utility methods for collection objects.
+
+Example-25: (Collections Utility class)
+````````````````````````````````````````
+
+package com.swamy.utils.collections;
+
+import java.util.*;
+
+public class CollectionsTest {
+
+	public static void main(String[] args) {
+		
+		List<String>list = new ArrayList<>();
+		list.add("YELLOW");
+		list.add("GREEN");
+		list.add("WHITE");
+		list.add("BLUE");
+		System.out.println("Before Sorting : " + list);
+		
+		Collections.sort(list);
+		System.out.println("After Sorting : " + list);
+		
+		Collections.reverse(list);
+		System.out.println("Reverse Sorting: " + list);
+		
+	}
+}
+
+output:
+```````
+Before Sorting : [YELLOW, GREEN, WHITE, BLUE]
+After Sorting : [BLUE, GREEN, WHITE, YELLOW]
+Reverse Sorting: [YELLOW, WHITE, GREEN, BLUE]
+
+===========================================================================
+
+2.Arrays:
+`````````
+- It defines several utility methods for Array objects.
+- Arrays class contains methods for sorting, searching and comparing arrays.
+
+public static <T> List<T> asList(T… a)
+public static void sort(int[] a)
+public static int binarySearch(int[] a, int k)
+public static boolean equals(int[] a, int[] a2)
+
+Example-26 (Arrays Example)
+***************************
+package com.swamy.utils.arrays;
+
+import java.util.*;
+
+public class ArraysEx {
+
+	public static void main(String[] args) {
+		
+		//Printing Arrays Elements
+		String[] data = {"Swamy" , "Karthi" , "Akhil"};
+		for (String vals : data) {
+			System.out.println(vals);
+		}
+		
+		//String Array Converting into List Collection
+		List<String> listData = Arrays.asList(data);
+		System.out.println(listData);
+		
+		//Sorting
+		Arrays.sort(data);
+		System.out.println("\n*******After Sorting*******");
+		for (String vals : data) {
+			System.out.println(vals);
+		}
+		
+		//Binary Search
+		int[] integers = {1,2,3,4,5,6};
+		int index = Arrays.binarySearch(integers, 3);
+		if(index >=0) {
+			System.out.println("Index of Given Value is : " + index);
+		}
+		else {
+			System.out.println("Not Found");
+		}
+		
+		//Comparing Two Arrays
+		int[] a1 = {1,2,3};
+		int[] a2 = {1,2,3};
+		boolean equals = Arrays.equals(a1, a2);
+		
+		if(equals) {
+			System.out.println("Given Arrays Are Equal : " + equals);
+		}
+		else {
+			System.out.println("Arrays Are Not Equal ?? " );
+		}
+		
+	}
+}
+
+output:
+```````
+Swamy
+Karthi
+Akhil
+[Swamy, Karthi, Akhil]
+
+*******After Sorting*******
+Akhil
+Karthi
+Swamy
+Index of Given Value is : 2
+Given Arrays Are Equal : true
+===========================================================================
+***************************************************************************
+
+Collection Framework:
+#####################
+- It represents unified Architecture for storing and Manipulating group of objects.
+- It has Interfaces and its implemented classes , Algorithms.
+
+Iterable Interface:
+********************
+- It is root interface of all the collection classes.
+- The Collection interface extends Iterable Interface.
+
+Queue:
+------
+- It is Introduced in Java1.5v
+- Used for holding elements prior to processing.
+- Queue interface maintains the (FIFO)first-in-first-out order.
+- It maintains Insertion Order.
+- PriorityQueue, Deque, and ArrayDeque which implements the Queue interface.
+
+PriorityQueue:
+--------------
+- It is Introduced in Java1.5v
+- It holds the elements to process their priorities.
+- It doesn't allow NULL Values.
+- It doesn't maintains Insertion Order.
+
+Example:
+````````
+package com.swamy.collection.priorityqueue;
+
+import java.util.Iterator;
+import java.util.PriorityQueue;
+
+public class PriorityQueueEx {
+
+	public static void main(String[] args) {
+		
+		PriorityQueue<String>queue = new PriorityQueue<>();
+		queue.add("Zero");
+		queue.add("One");
+		queue.add("Two");
+		System.out.println(queue);
+		System.out.println("Head : " + queue.element());
+		System.out.println("Head : " + queue.peek());
+		
+		Iterator<String> iterator = queue.iterator();
+		while (iterator.hasNext()) {
+			String data = (String) iterator.next();
+			System.out.println(data);
+		}
+		
+		queue.remove();
+		System.out.println(queue);
+
+		queue.poll();
+		System.out.println(queue);
+		
+		Iterator<String> iterator2 = queue.iterator();
+		while (iterator2.hasNext()) {
+			String data = (String) iterator2.next();
+			System.out.println(data);
+		}
+	}
+}
+
+/*
+output:
+[One, Zero, Two]
+Head : One
+Head : One
+One
+Zero
+Two
+[Two, Zero]
+[Zero]
+Zero
+*/	
+
+=====================================================================
+
+Deque:
+-------
+- Deque is introduced in java 1.6v.
+- Deque stands for 'Double-Ended Queue' which enables us to perform the operations at both the ends.
+- Deque interface extends the Queue interface.
+- We can add or remove the elements from the both sides.
+		Deque d = new ArrayDeque();
+
+ArrayDeque:
+-----------
+- ArrayDeque is introduced in java 1.6v.
+- ArrayDeque implements the Deque.
+- It maintains Insertion Order.
+- We can add or remove the data at the both ends.
+- ArrayDeque is faster than ArrayList and Stack 
+- In ArrayDeque, there is no capacity restrictions.
+
+Example:
+`````````
+package com.swamy.collection.arrayqueue;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class ArrayDequeEx {
+
+	public static void main(String[] args) {
+		Deque<String>deque = new ArrayDeque<>();
+		deque.add("Zero");
+		deque.add("One");
+		deque.add("Two");
+		deque.forEach(System.out::println);
+	}
+}
+/*
+output:
+Zero
+One
+Two
+*/
+=========================================================================		
